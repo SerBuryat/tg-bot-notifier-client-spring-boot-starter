@@ -41,6 +41,15 @@ tasks.bootJar {
 publishing {
     repositories {
         mavenLocal()
+        maven {
+            name = "github"
+            url = uri("https://maven.pkg.github.com/SerBuryat/tg-bot-notifier-client-spring-boot-starter")
+            credentials {
+//                add `gradle.properties` file with `gprUser` and `grpToken values`
+                username = project.findProperty("gprUser") as String? ?: System.getenv("GITHUB_USERNAME")
+                password = project.findProperty("gprToken") as String? ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
     }
     publications {
         create<MavenPublication>("mavenJava") {
