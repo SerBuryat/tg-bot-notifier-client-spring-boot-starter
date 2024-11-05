@@ -10,7 +10,7 @@ import org.springframework.web.context.annotation.RequestScope;
 @Getter
 @Component
 @RequestScope
-public class RequestContextHolder {
+public class RequestBodyHolder {
 
     private JsonNode requestBody;
 

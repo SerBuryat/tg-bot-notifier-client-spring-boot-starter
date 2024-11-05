@@ -5,8 +5,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConditionalOnProperty(name = "notification.url")
+@ConditionalOnProperty(name = "tg-bot-notifier-server.url")
 @ComponentScan
-public class TgBotNotificationClientAutoConfiguration {
+public class TgBotNotifierClientAutoConfiguration {
 
 }

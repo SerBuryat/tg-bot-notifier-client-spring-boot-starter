@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.thunderbase.tg.client.springbootstarter.TgBotNotificationClientAutoConfiguration
+  com.thunderbase.tg.client.springbootstarter.TgBotNotifierClientAutoConfiguration
