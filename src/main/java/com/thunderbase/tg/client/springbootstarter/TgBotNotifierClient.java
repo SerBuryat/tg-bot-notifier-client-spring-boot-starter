@@ -8,6 +8,8 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -28,9 +30,7 @@ public class TgBotNotifierClient {
      * This class use {@link org.springframework.web.context.annotation.RequestScope  @RequestScope}
      * and inject request body in {@link RequestBodyInjectorControllerAdvice  RequestBodyInjectorAdvice} class.
      * </p> */
-    @Getter
     private final RequestBodyHolder requestBodyHolder;
-
     private final ObjectMapper mapper;
 
     @Value("${tg-bot-notifier-server.url}")
@@ -38,7 +38,17 @@ public class TgBotNotifierClient {
 
     @SneakyThrows
     public void send(TgBotNotification notification) {
-        var reqBody = mapper.writeValueAsString(notification);
+        var notificationWithRequestBody = new TgBotNotification(
+                notification.title(), notification.msg(),
+                // for `requestBody` field first
+                new LinkedHashMap<>(
+                        Map.of(
+                                "requestBody", requestBodyHolder.getRequestBody(),
+                                "details", notification.details()
+                        )
+                )
+        );
+        var reqBody = mapper.writeValueAsString(notificationWithRequestBody);
 
         var req = HttpRequest.newBuilder()
                 .uri(URI.create(errorNotificationUrl))
