@@ -46,8 +46,8 @@ publishing {
             url = uri("https://maven.pkg.github.com/SerBuryat/tg-bot-notifier-client-spring-boot-starter")
             credentials {
 //                add `gradle.properties` file with `gprUser` and `grpToken values`
-                username = project.findProperty("gprUser") as String? ?: System.getenv("GITHUB_USERNAME")
-                password = project.findProperty("gprToken") as String? ?: System.getenv("GITHUB_TOKEN")
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
             }
         }
     }
