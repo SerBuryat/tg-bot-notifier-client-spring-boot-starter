@@ -1,5 +1,5 @@
 package com.thunderbase.tg.client.springbootstarter;
 
-public record TgBotNotification(String title, String msg, Object details) {
+public record TgBotNotification(String chatId, String msg, Object details) {
 
 }

@@ -10,7 +10,6 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -36,10 +35,13 @@ public class TgBotNotifierClient {
     @Value("${tg-bot-notifier-server.url}")
     private String errorNotificationUrl;
 
+    /** Send JSON request via tg bot to chat with {@link TgBotNotification#chatId()}.
+     *  <p> Attach {@link org.springframework.web.bind.annotation.RequestBody}
+     *  from Controller method (if exists) to {@link TgBotNotification#details()} </p>*/
     @SneakyThrows
     public void send(TgBotNotification notification) {
         var notificationWithRequestBody = new TgBotNotification(
-                notification.title(), notification.msg(),
+                notification.chatId(), notification.msg(),
                 // for `requestBody` field first
                 new LinkedHashMap<>(
                         Map.of(
