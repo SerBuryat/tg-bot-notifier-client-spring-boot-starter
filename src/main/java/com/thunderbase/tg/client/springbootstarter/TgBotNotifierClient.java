@@ -33,7 +33,6 @@ public class TgBotNotifierClient {
      * </p> */
     private final RequestBodyHolder requestBodyHolder;
     private final ObjectMapper mapper;
-    private final JsonNode emptyRequestBodyJsonNode = mapper.createObjectNode();
 
     @Value("${tg-bot-notifier-server.url}")
     private String errorNotificationUrl;
@@ -49,7 +48,7 @@ public class TgBotNotifierClient {
                 new LinkedHashMap<>(
                         Map.of(
                                 "requestBody", Optional.ofNullable(requestBodyHolder.getRequestBody())
-                                        .orElse(emptyRequestBodyJsonNode),
+                                        .orElse(mapper.createObjectNode()),
                                 "details", notification.details()
                         )
                 )
