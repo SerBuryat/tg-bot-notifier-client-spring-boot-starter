@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "com.thunderbase.tg.client"
-version = "0.4"
+version = "0.5"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 java {
