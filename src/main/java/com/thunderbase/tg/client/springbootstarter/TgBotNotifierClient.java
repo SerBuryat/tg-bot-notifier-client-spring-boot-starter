@@ -3,6 +3,7 @@ package com.thunderbase.tg.client.springbootstarter;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -10,6 +11,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +33,7 @@ public class TgBotNotifierClient {
      * </p> */
     private final RequestBodyHolder requestBodyHolder;
     private final ObjectMapper mapper;
+    private final JsonNode emptyRequestBodyJsonNode = mapper.createObjectNode();
 
     @Value("${tg-bot-notifier-server.url}")
     private String errorNotificationUrl;
@@ -45,7 +48,8 @@ public class TgBotNotifierClient {
                 // for `requestBody` field first
                 new LinkedHashMap<>(
                         Map.of(
-                                "requestBody", requestBodyHolder.getRequestBody(),
+                                "requestBody", Optional.ofNullable(requestBodyHolder.getRequestBody())
+                                        .orElse(emptyRequestBodyJsonNode),
                                 "details", notification.details()
                         )
                 )
